@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Edit</h2>
+    <form action="/update/<%= users._id %>" method="POST">
+        <input type="text" value="<%= users.name %>" name="name">
+        <input type="text" value="<%= users.email %>" name="email">
+        <input type="password" value="" name="passwordold" placeholder="Senha atual">
+        <input type="password" value="" name="password" placeholder="Nova senha">
+        <br/>
+        <button><a href="/listAll">Listar todos</a></button>
+        <button type="submit">Editar</button>
+    </form>
+</body>
+</html>
