@@ -10,6 +10,7 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [errorResponse, setErrorResponse] = useState(null);
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -24,25 +25,25 @@ export default function Register() {
         return;
       }
     
-      if (password.length < 2) {
-        setErrorMessage('A senha deve conter pelo menos 2 caracteres.');
-        return;
-      }
+      // if (password.length < 2) {
+      //   setErrorMessage('A senha deve conter pelo menos 2 caracteres.');
+      //   return;
+      // }
     
-      if (name.length < 2 || name.length > 125) {
-        setErrorMessage('O nome deve conter entre 2 e 125 caracteres.');
-        return;
-      }
+      // if (name.length < 2 || name.length > 125) {
+      //   setErrorMessage('O nome deve conter entre 2 e 125 caracteres.');
+      //   return;
+      // }
     
-      if (email.length < 10 || email.length > 125) {
-        setErrorMessage('O email deve conter entre 10 e 125 caracteres.');
-        return;
-      }
+      // if (email.length < 10 || email.length > 125) {
+      //   setErrorMessage('O email deve conter entre 10 e 125 caracteres.');
+      //   return;
+      // }
 
-      if (!email.includes('@')) {
-        setErrorMessage('Email inválido');
-        return;
-      }
+      // if (!email.includes('@')) {
+      //   setErrorMessage('Email inválido');
+      //   return;
+      // }
       
       const data = {
         name,
@@ -52,13 +53,27 @@ export default function Register() {
       
       try {
         const response = await api.post('/users', data);
-            setSuccessMessage('Usuário criado com sucesso!');
-            setErrorMessage('');
-            clearFields();
+           if (response.status === 400 || response.status === 422) {
+              setErrorMessage(response.data.message); 
+            } else if (response.status === 200) {
+                setErrorMessage('');
+                clearFields();
+                setSuccessMessage('Usuário criado com sucesso!');
+            } else {
+                setErrorMessage(response.data.message); 
+            }
+            
+            
         } catch (error) {
-            setErrorMessage('Ocorreu um erro ao criar o usuário.');
-            setSuccessMessage('');
-            console.error(error);
+            if (error.response) {
+              console.error('Erro na requisição:', error.response);
+              setErrorMessage(error.response.data.message);
+              setSuccessMessage('');
+            } else {
+              console.error('Erro inesperado:', error);
+              setErrorMessage('Ocorreu um erro ao criar o usuário.');
+              setSuccessMessage('');
+            }
         }
     };
 
