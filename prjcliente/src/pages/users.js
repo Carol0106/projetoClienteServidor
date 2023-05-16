@@ -85,7 +85,7 @@ export default function Register() {
                 <input type="password" name="confirmpassword" placeholder="Confirmação de senha" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)}/><br />
 
                 <div className={`row botoes ${Style}`}>
-                    <button type="button" className={`btn btcancelar ${Style}`}>Cancelar</button>
+                    <a href="/welcome" type="button" className={`btn btcancelar ${Style}`}>Cancelar</a>
                     <button type="submit" className={`btn btsalvar ${Style}`}>Cadastrar</button>
                 </div>
                 </form>

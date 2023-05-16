@@ -76,6 +76,7 @@ input:focus { /* Chrome, Firefox, Opera, Safari 10.1+ */
     background-color: #F1F1F1;
     color: #CA814E;
     outline: 2px solid #CA814E;
+    text-decoration: none;
 }
 
 .btsalvar{

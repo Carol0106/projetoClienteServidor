@@ -12,8 +12,8 @@ export default function Welcome() {
                         Sistema de aviso de ocorrências de interrupção <br />
                         de tráfego em rodovias (SAOITR)
                     </h1> <br />
-                    <button to="/register" className={`btn btw`}>Cadastro</button>
-                    <button to="/login" className={`btn btw`}>Login</button>
+                    <a href="/users" className={`btn btw`}>Cadastro</a>
+                    <a href="/login" className={`btn btw`}>Login</a>
                 </div>
             </div>
 
