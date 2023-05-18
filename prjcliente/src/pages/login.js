@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Style from './../assets/styles/login.css';
+import Style from './../assets/styles/login.module.css';
 import api from './../services/api';
 
 export default function Login() {
@@ -9,6 +9,10 @@ export default function Login() {
     const [errorMessage, setErrorMessage] = useState('');
     const [errorResponse, setErrorResponse] = useState(null);
     const router = useRouter();
+
+    useEffect(() => {
+      document.body.classList.add(Style.bodyClass);
+    }, []);
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -32,7 +36,9 @@ export default function Login() {
                 setErrorResponse('');
                 setErrorMessage('');
                 console.log('Login bem-sucedido');
-                router.push('/home'); // Navega para a página Home
+                 // Navega para a página Home
+                 localStorage.setItem('loggedIn', true);
+                 router.push('/home');
               // Redirecione o usuário ou realize outras ações
             } else {
             //   setErrorMessage('Erro ao fazer login');
@@ -50,25 +56,26 @@ export default function Login() {
       };
 
     return (
-        <div className={`container containerP ${Style}`}>
+      <div className={`${Style.background}`}>
+        <div className={`container ${Style.containerP}`}>
 
-            {errorMessage && <p className={`mensagemE ${Style}`}>{errorMessage}</p>}
-            {errorResponse && <p className={`mensagemE ${Style}`}>{errorResponse.message}</p>}
+          {errorMessage && <p className={`${Style.mensagemE}`}>{errorMessage}</p>}
+          {errorResponse && <p className={`${Style.mensagemE}`}>{errorResponse.message}</p>}
 
-            <form onSubmit={handleLogin}>
-                <h2>Login</h2>
-                <input type="email" name="email" placeholder="Email" value={email} onChange={handleEmailChange}  /><br />
+          <form onSubmit={handleLogin}>
+              <h2 className={`${Style.title}`}>Login</h2>
+              <input className={`${Style.input}`} type="email" name="email" placeholder="Email" value={email} onChange={handleEmailChange}  /><br />
 
-                <input type="password" name="password" placeholder="Senha" value={password} onChange={handlePasswordChange} /><br /><br />
+              <input className={`${Style.input}`} type="password" name="password" placeholder="Senha" value={password} onChange={handlePasswordChange} /><br /><br />
 
-                <div className={`row botoes ${Style}`}>
-                    <button className={`btn btcancelar ${Style}`}>Cancelar</button>
-                    <button type="submit" className={`btn btsalvar ${Style}`}>Acessar</button>
-                </div>
-                <br/>
-                <a href="/homeSemValidacao"><b>Entrar sem cadastro</b></a>
-            </form>
+              <div className={`row ${Style.botoes}`}>
+                  <button className={`${Style.btn} ${Style.btcancelar}`}>Cancelar</button>
+                  <button type="submit" className={`${Style.btn} ${Style.btsalvar}`}>Acessar</button>
+              </div>
+              <br/>
+              <a className={`${Style.btnEntrar}`} href="/homeSemValidacao"><b>Entrar sem cadastro</b></a>
+          </form>
         </div>
-     
+      </div>    
     )
 }

@@ -1,19 +1,23 @@
-import './../assets/styles/welcome.css';
-import React from "react";
+import Style from './../assets/styles/welcome.module.css';
+import React, { useEffect } from "react";
 import Register from "./users.js";
 import Login from "./../pages/login.js";
 import {BrowserRouter as Router, Route, Routes, Switch, Link, AbortedDeferredError } from 'react-router-dom';
 
 export default function Welcome() {
+    useEffect(() => {
+        document.body.classList.add(Style.bodyClass);
+    }, []);
+
     return (
-            <div className={`background`}>
-                <div className={`container conwel`}>
-                    <h1 className={`txtinicial`}>
+            <div className={`${Style.background}`}>
+                <div className={`container ${Style.conwel}`}>
+                    <h1 className={`${Style.txtinicial}`}>
                         Sistema de aviso de ocorrências de interrupção <br />
                         de tráfego em rodovias (SAOITR)
                     </h1> <br />
-                    <a href="/users" className={`btn btw`}>Cadastro</a>
-                    <a href="/login" className={`btn btw`}>Login</a>
+                    <a href="/users" className={`${Style.btn} ${Style.btw}`}>Cadastro</a>
+                    <a href="/login" className={`${Style.btn} ${Style.btw}`}>Login</a>
                 </div>
             </div>
 

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600&display=swap');
 
-html{
+.background{
     font-family: 'Inter';
     background-image: url('../img/banner.jpg');
     background-size: cover;
@@ -15,7 +15,6 @@ html{
     top: 0;
     margin: 0;
     padding: 0;
-    height: 100%;
     width: 100%;
     overflow: hidden;
    /* background-color: red; */
@@ -54,3 +53,7 @@ html{
     cursor: pointer;
     text-decoration: none;
 }
+
+.bodyClass {
+    margin: -10px;
+  }

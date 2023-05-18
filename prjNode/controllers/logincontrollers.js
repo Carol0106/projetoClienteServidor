@@ -6,12 +6,12 @@ exports.login = async function (req, res, next) {
   const { email, password } = req.body;
 
   // Verificar a quantidade mínima e máxima de caracteres na senha
-  if (password.length < 2 || password.length > 125) {
+  if (!password || password.length < 2 || password.length > 125) {
     return res.status(400).json({ message: 'A senha deve ter entre 2 e 125 caracteres' });
   }
 
   // Verificar a quantidade mínima e máxima de caracteres no email
-  if (email.length < 10 || email.length > 125) {
+  if (!email || email.length < 10 || email.length > 125) {
     return res.status(400).json({ message: 'O email deve ter entre 10 e 125 caracteres' });
   }
 

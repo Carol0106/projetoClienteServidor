@@ -17,8 +17,8 @@ export default function Home() {
                         </a>
                     </li>
                     <li className={Style['nav-item']} >
-                        <a className={Style.a} href="/welcome">
-                        Sair
+                        <a className={Style.a} href="/login">
+                        Login
                         </a>
                     </li>
                 </ul>

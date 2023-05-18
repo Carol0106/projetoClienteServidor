@@ -1,5 +1,5 @@
-import Style from './../assets/styles/register.css';
-import { useState } from 'react';
+import Style from './../assets/styles/register.module.css';
+import { useState, useEffect } from 'react';
 import api from '../services/api';
 
 export default function Register() {
@@ -11,6 +11,10 @@ export default function Register() {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [errorResponse, setErrorResponse] = useState(null);
+
+    useEffect(() => {
+      document.body.classList.add(Style.bodyClass);
+    }, []);
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -85,25 +89,27 @@ export default function Register() {
     }
 
     return (
-            <div className={`container containerP ${Style}`}>
-                {successMessage && <div className={`mensagemS ${Style}`}>{successMessage}</div>}
-                {errorMessage && <div className={`mensagemE ${Style}`}>{errorMessage}</div>}
+          <div className={`${Style.background}`}>
+            <div className={`container ${Style.containerP}`}>
+                {successMessage && <div className={`${Style.mensagemS}`}>{successMessage}</div>}
+                {errorMessage && <div className={`${Style.mensagemE}`}>{errorMessage}</div>}
 
                 <form onSubmit={handleSubmit}>
-                <h2>Cadastro</h2>
-                <input type="text" name="name" placeholder="Nome" value={name}onChange={(event) => setName(event.target.value)}/><br />
+                <h2 className={`${Style.title}`}>Cadastro</h2>
+                <input className={`${Style.input}`} type="text" name="name" placeholder="Nome" value={name}onChange={(event) => setName(event.target.value)}/><br />
 
-                <input type="email" name="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)}/><br />
+                <input className={`${Style.input}`} type="email" name="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)}/><br />
 
-                <input type="password" name="password" placeholder="Senha" value={password} onChange={(event) => setPassword(event.target.value)}/><br />
+                <input className={`${Style.input}`} type="password" name="password" placeholder="Senha" value={password} onChange={(event) => setPassword(event.target.value)}/><br />
 
-                <input type="password" name="confirmpassword" placeholder="Confirmação de senha" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)}/><br />
+                <input className={`${Style.input}`} type="password" name="confirmpassword" placeholder="Confirmação de senha" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)}/><br />
 
-                <div className={`row botoes ${Style}`}>
-                    <a href="/welcome" type="button" className={`btn btcancelar ${Style}`}>Cancelar</a>
-                    <button type="submit" className={`btn btsalvar ${Style}`}>Cadastrar</button>
+                <div className={`row ${Style.botoes}`}>
+                    <a href="/welcome" type="button" className={`${Style.btn} ${Style.btcancelar}`}>Cancelar</a>
+                    <button type="submit" className={`${Style.btn} ${Style.btsalvar}`}>Cadastrar</button>
                 </div>
                 </form>
             </div>
+          </div>
     )
 }
