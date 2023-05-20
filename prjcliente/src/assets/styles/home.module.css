@@ -66,3 +66,18 @@
     margin: -10px;
   }
 
+.mensagemE{
+    position: absolute;
+    top: 119px;
+    background-color: lightcoral;
+    height: 80px;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    font-size: 20px;
+    color: darkred;
+    font-weight: bold;
+    text-transform: uppercase;
+}

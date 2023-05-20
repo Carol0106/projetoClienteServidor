@@ -9,6 +9,7 @@ export default function Login() {
     const [errorMessage, setErrorMessage] = useState('');
     const [errorResponse, setErrorResponse] = useState(null);
     const router = useRouter();
+    const [token, setToken] = useState('');
 
     useEffect(() => {
       document.body.classList.add(Style.bodyClass);
@@ -31,14 +32,23 @@ export default function Login() {
           
             if (response.status === 400 || response.status === 401) {
             //   setErrorMessage('Credenciais inválidas');
-              setErrorResponse(response.data.message); // Armazena a resposta de erro completa
+              setErrorResponse(response.data.message); 
             } else if (response.status === 200) {
                 setErrorResponse('');
                 setErrorMessage('');
                 console.log('Login bem-sucedido');
-                 // Navega para a página Home
-                 localStorage.setItem('loggedIn', true);
-                 router.push('/home');
+                
+                const token = response.data.token; // Obtém o token da resposta
+                setToken(token); 
+                localStorage.setItem('token', token); // Armazene o token no localStorage
+
+                // Converter o objeto em formato JSON
+                const userDataJson = JSON.stringify(response.data.dataUser);
+                // Salvar a string JSON no localStorage
+                localStorage.setItem('userData', userDataJson);
+                
+                // Navega para a página Home
+                router.push('/home');
               // Redirecione o usuário ou realize outras ações
             } else {
             //   setErrorMessage('Erro ao fazer login');
@@ -69,11 +79,12 @@ export default function Login() {
               <input className={`${Style.input}`} type="password" name="password" placeholder="Senha" value={password} onChange={handlePasswordChange} /><br /><br />
 
               <div className={`row ${Style.botoes}`}>
-                  <button className={`${Style.btn} ${Style.btcancelar}`}>Cancelar</button>
+                  <a href="/welcome" className={`${Style.btn} ${Style.btcancelar}`}>Cancelar</a>
                   <button type="submit" className={`${Style.btn} ${Style.btsalvar}`}>Acessar</button>
               </div>
               <br/>
               <a className={`${Style.btnEntrar}`} href="/homeSemValidacao"><b>Entrar sem cadastro</b></a>
+              <a className={`${Style.btnEntrar}`} href="/users"><b>Fazer cadastro</b></a>
           </form>
         </div>
       </div>    

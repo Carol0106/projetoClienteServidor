@@ -2,7 +2,6 @@ import Style from './../assets/styles/welcome.module.css';
 import React, { useEffect } from "react";
 import Register from "./users.js";
 import Login from "./../pages/login.js";
-import {BrowserRouter as Router, Route, Routes, Switch, Link, AbortedDeferredError } from 'react-router-dom';
 
 export default function Welcome() {
     useEffect(() => {

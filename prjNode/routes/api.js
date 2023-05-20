@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userControllers');
 const loginController = require('../controllers/logincontrollers');
+const logoutController = require('../controllers/logoutControllers');
 
 router.get('/teste', userController.test);
 router.get('/details', userController.details);
@@ -16,6 +17,7 @@ router.post('/exemplo', (req,res) => {
 });
 
 router.post('/login', loginController.login);
+router.post('/logout', logoutController.logout);
 
 
 module.exports = router;

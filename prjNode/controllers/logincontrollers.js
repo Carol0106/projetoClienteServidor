@@ -29,9 +29,18 @@ exports.login = async function (req, res, next) {
      // Verificar se o usuário existe e se a senha existe
     if (user && user.password === HashPassword) {
     // O login foi bem-sucedido
+
+    // Calcular o tempo de expiração como 1 hora a partir do momento atual
+    const tempoExpiracao = Math.floor(Date.now() / 1000) + 3600; // Adiciona 3600 segundos (1 hora)
+
     // Gerar um token JWT com o ID do usuário
-        const token = jwt.sign({ userId: user._id }, 'chaveToken', { expiresIn: '1h' });
-        res.status(200).json({ message: 'Login bem-sucedido', token: token });
+        const token = jwt.sign({ exp: tempoExpiracao, id: user.id}, process.env.TOKEN_C );
+        let dadodUsuario = {
+          id: user.id,
+          name: user.name,
+          email: user.email
+        };
+        res.status(200).json({ message: 'Login bem-sucedido', token: token, dataUser: dadodUsuario });
     } else {
     // Credenciais inválidas
         res.status(401).json({ message: 'Credenciais inválidas' });

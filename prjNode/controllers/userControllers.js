@@ -11,19 +11,15 @@ exports.details = function (req, res) {
     });
 };
 
-exports.create = function (req, res, next) {
+exports.create = async function (req, res, next) {
     console.log(req.body);
-    
+
     let nm = req.body.name;
     let em = req.body.email;
     let sn = req.body.password;
 
-    if (nm === '' || em === '' || sn === '') {
+    if (nm === '' || em === '' ||  sn === '') {
         return res.status(400).json({ message: 'Por favor, preencha todos os campos!' });
-    }
-
-    if (sn.length < 2) {
-        return res.status(400).json({ message: 'A senha deve conter pelo menos 2 caracteres.' });
     }
 
     if (nm.length < 2 || nm.length > 125) {
@@ -38,28 +34,42 @@ exports.create = function (req, res, next) {
         return res.status(400).json({ message: 'Email inválido' });
     }
 
-    let hash = crypto.createHash('md5').update(sn).digest('hex');
+    let hash = sn; //senha já veio em hash
+
+    // Verificar se a senha não está em hash 
+    if (typeof sn === 'string' && sn.length !== 32) {
+        if (sn.length < 2) {
+            return res.status(400).json({ message: 'A senha deve conter pelo menos 2 caracteres.' });
+        } else if (sn.length > 125) {
+            return res.status(400).json({ message: 'A senha deve conter no máximo 125 caracteres.' });
+        } else {
+            // Transformar a senha em hash
+            hash = crypto.createHash('md5').update(sn).digest('hex');
+        }
+    }
+
+    let id = await Users.countDocuments();
 
     let data = {
+        id: id === 0? 1: id+1,
         name: nm,
         email: em,
         password: hash
     };
-    
-    Users.findOne({ email: em }, function (err, user) {
-        //se der erro na consulta do banco 
-        if (err) {
-          return next(err);
-        }
-        if (user) {
-          // Já existe um usuário com esse email
-          return res.status(422).json({ message: 'Já existe um cadastro com esse email.' });
+
+    try {
+        const existingUser = await Users.findOne({ email: em }).exec();
+        if (existingUser) {
+            console.log(existingUser)
+            // Já existe um usuário com esse email
+            return res.status(422).json({ message: 'Já existe um cadastro com esse email.' });
         }
         // Criar um novo usuário
-        Users.create(data).then(function (users) {
-            res.redirect("/listAll");
-        }).catch(next);
-    });
+        const createdUser = await Users.create(data);
+        res.redirect("/listAll");
+    } catch (err) {
+        return next(err);
+    }
 };
 
 exports.edit = function(req, res, next) {
