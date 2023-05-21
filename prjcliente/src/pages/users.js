@@ -109,7 +109,7 @@ export default function Register() {
                 <input className={`${Style.input}`} type="password" name="confirmpassword" placeholder="Confirmação de senha" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)}/><br />
 
                 <div className={`row ${Style.botoes}`}>
-                    <a href="/welcome" type="button" className={`${Style.btn} ${Style.btcancelar}`}>Cancelar</a>
+                    <a href="/" type="button" className={`${Style.btn} ${Style.btcancelar}`}>Cancelar</a>
                     <button type="submit" className={`${Style.btn} ${Style.btsalvar}`}>Cadastrar</button>
                 </div>
 

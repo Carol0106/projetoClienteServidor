@@ -2,7 +2,6 @@
 
 .background{
     font-family: 'Inter';
-    background-image: url('../img/banner.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
@@ -20,17 +19,29 @@
    /* background-color: red; */
 }
 
+.background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/banner2.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.5); /* Ajuste o valor de acordo com o nível de escurecimento desejado */
+    z-index: -1;
+  }
+
 .containerP{
     height: 450px;
-    background-color: white;
     margin: auto;
-    /* text-align: center; */
     border-radius: 17px;
     width: 600px;
     display: flex;
     align-items: center;
     justify-content: center;    
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(230,230,230,0.5);
 }
 
 
@@ -95,11 +106,11 @@
     text-align: center;
     font-size: 30px;
     margin: 0 0 20px 0;
-    color: chocolate;
+    color: #2E2A2A;
 }
 
 .btnEntrar{
-    color: #4D4D4D;
+    color: #2E2A2A;
     display: flex;
     justify-content: center;
     text-transform: uppercase;
@@ -124,5 +135,5 @@
 }
 
 .bodyClass {
-    margin: -10px;
+    margin: 0px;
   }

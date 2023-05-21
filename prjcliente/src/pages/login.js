@@ -79,7 +79,7 @@ export default function Login() {
               <input className={`${Style.input}`} type="password" name="password" placeholder="Senha" value={password} onChange={handlePasswordChange} /><br /><br />
 
               <div className={`row ${Style.botoes}`}>
-                  <a href="/welcome" className={`${Style.btn} ${Style.btcancelar}`}>Cancelar</a>
+                  <a href="/" className={`${Style.btn} ${Style.btcancelar}`}>Cancelar</a>
                   <button type="submit" className={`${Style.btn} ${Style.btsalvar}`}>Acessar</button>
               </div>
               <br/>
