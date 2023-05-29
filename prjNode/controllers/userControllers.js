@@ -66,7 +66,8 @@ exports.create = async function (req, res, next) {
         }
         // Criar um novo usuário
         const createdUser = await Users.create(data);
-        res.redirect("/listAll");
+        res.status(200).json({ message: 'Cadastro bem-sucedido', usuario: createdUser});
+        // res.redirect("/listAll");
     } catch (err) {
         return next(err);
     }

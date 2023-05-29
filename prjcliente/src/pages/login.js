@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Style from './../assets/styles/login.module.css';
 import api from './../services/api';
+import md5 from 'md5';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -27,7 +28,8 @@ export default function Login() {
         event.preventDefault();
     
         try {
-            const response = await api.post('/login', { email, password });
+            console.log(md5(password));
+            const response = await api.post('/login', { email, password: md5(password) });
             console.log('Status da resposta:', response.status);
           
             if (response.status === 400 || response.status === 401) {
@@ -43,7 +45,12 @@ export default function Login() {
                 localStorage.setItem('token', token); // Armazene o token no localStorage
 
                 // Converter o objeto em formato JSON
-                const userDataJson = JSON.stringify(response.data.dataUser);
+                const dataUser = {
+                   id : response.data.id,
+                   name :  response.data.name,
+                   email : response.data.email
+                };
+                const userDataJson = JSON.stringify(dataUser);
                 // Salvar a string JSON no localStorage
                 localStorage.setItem('userData', userDataJson);
                 

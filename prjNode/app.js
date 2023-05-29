@@ -62,8 +62,7 @@ app.use(function(err, req, res, next){
 // Variável global para armazenar os tokens inválidos
 global.blacklist = [];
 
-let port = 5002;
-// servidor na porta 5002
-app.listen(process.env.port || port, () =>{
-  console.log('Servidor em execução na porta: '+ port);
+
+app.listen(process.env.port, () =>{
+  console.log('Servidor em execução na porta: '+ process.env.port);
 });
