@@ -11,8 +11,11 @@ exports.logout = async function (req, res, next) {
           }
       
           // Verifica se o usuário está autenticado
-          const token = req.headers.authorization;
-          if (!token) {
+          const token = req.headers['authorization'];
+          console.log(token)
+          const bearerToken = token.split(' ')[1];
+          const decoded = jwt.verify(bearerToken, process.env.TOKEN_C);
+          if (!bearerToken) {
             return res.status(401).json({ error: 'Usuário não autenticado' });
           }
       
@@ -24,9 +27,8 @@ exports.logout = async function (req, res, next) {
           }
       
           // Verifica se o ID informado no body corresponde ao ID do usuário solicitante
-          const decodedToken = jwt.decode(token);
-          console.log("oiii",decodedToken);
-          if (!decodedToken || decodedToken.id !== user.id) {
+  
+          if (!decoded || decoded.id !== user.id) {
             return res.status(401).json({ error: 'Não é possível realizar a solicitação' });
           }
       
