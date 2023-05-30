@@ -40,7 +40,7 @@ export default function Home() {
           try {
             const response = await api.post('/logout',  { id: dataUser.id }, {
               headers: {
-                Authorization: `${storedToken}`,
+                Authorization: `Bearer ${storedToken}`,
               }
             });
       
