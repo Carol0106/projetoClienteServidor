@@ -49,7 +49,7 @@ const OccurrencesArray = [
 
 const Occurrence =  new Schema({
     registered_at:{
-        type: Date,
+        type: String,
         default: Date.now,
         required: [true,'*Campo obrigatório!']
     },
