@@ -59,6 +59,11 @@ export default function Menu() {
                 <ul className={Style['navbar-nav']}>
                     <li className={Style['nav-item']}>
                         <a className={Style.a} href="/home"> 
+                        home
+                        </a>
+                    </li>
+                    <li className={Style['nav-item']}>
+                        <a className={Style.a} href="/occurrences/getAll"> 
                         Listagem de incidentes
                         </a>
                     </li>
@@ -68,12 +73,12 @@ export default function Menu() {
                         </a>
                     </li>
                     <li className={Style['nav-item']}>
-                        <a className={Style.a} href="">
+                        <a className={Style.a} href="/occurrences/create">
                         Reportar incidentes
                         </a>
                     </li>
                     <li className={Style['nav-item']}>
-                        <a className={Style.a} href="">
+                        <a className={Style.a} href="/users/perfil">
                         Perfil
                         </a>
                     </li>

@@ -1,0 +1,106 @@
+
+.background{
+    font-family: 'Inter';
+    height: 100vh;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+   /* background-color: red; */
+}
+
+.containerP{
+    height: 60%;
+    margin: auto;
+    width: 65%;
+    /* background-color: rgba(95,95,95,0.5); */
+    /* background-color: #D9D9D9; */
+}
+
+
+.title{
+    text-transform: uppercase;
+    font-size: 30px;
+    margin: 0 0 50px 0;
+    color: #2E2A2A;
+}
+
+.btnAtualizar{
+    text-decoration: none;
+    color: #fff;
+    background-color: #CA814E;
+    height: 40px;
+    width: 130px;
+    display: flex;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    position: absolute;
+    right: 18%;
+    top: 195px;
+}
+
+.divRow{
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    height: 30px;
+}
+
+.divRow label{
+    width: 60px;
+}
+
+
+
+.input{
+    height: 11px;
+    width: 94.6%;
+    border-radius: 30px;
+    background-color: #D9D9D9!important;
+    margin: 8px;
+    border: none;
+    padding: 21px;
+}
+
+.input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #5E5E5E!important;
+    font-weight: 600;
+    opacity: 1; /* Firefox */
+    font-size: 16px;
+}
+
+.input:focus { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    outline: 2px solid #CA814E;
+}
+
+
+.btn{
+    border: none;
+    height: 45px;
+    width: 15.5%;
+    border-radius: 30px;
+    font-size: 16px;
+    margin: 8px;
+    display: flex;
+    float: right;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;    
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btcancelar{
+    background-color: #F1F1F1;
+    color: #CA814E;
+    outline: 2px solid #CA814E;
+    text-decoration: none;
+}
+
+.btsalvar{
+    background-color: #CA814E;
+    color: #ffff;
+}
+

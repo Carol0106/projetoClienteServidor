@@ -11,14 +11,6 @@ export default function Home() {
                 </h1>
             </div>  
            < Menu />
-
-            <div>
-                <h2>Listagem de Incidentes</h2>
-                <div>
-                    <a href="/occurrences">Adicionar</a>
-                    <a>Atualizar</a>
-                </div>
-            </div>
         </div>
     )
 }

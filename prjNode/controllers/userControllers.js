@@ -1,10 +1,6 @@
 const Users = require('../models/UserModel');
 const crypto = require('crypto');
 
-exports.test = function (req, res) {
-    res.render('createUsers');
-};
-
 exports.details = function (req, res) {
     Users.find({}).then(function(users){
         res.send(users);

@@ -1,65 +1,108 @@
 const Occurrences = require('../models/OccurrenceModel');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const User = require('../models/UserModel');
 
 
 exports.create = async function (req, res, next) {
-    console.log(req.body);
+    console.log("dados", req.body);
 
-    // let nm = req.body.name;
-    // let em = req.body.email;
-    // let sn = req.body.password;
+    let reg = req.body.registered_at;
+    let loc = req.body.local;
+    let occ = req.body.occurrence_type;
+    let km = req.body.km;
+    let user_id = req.body.user_id;
 
-    // if (nm === '' || em === '' ||  sn === '') {
-    //     return res.status(400).json({ message: 'Por favor, preencha todos os campos!' });
-    // }
+    // Verificar se o usuário solicitante está autenticado
+    const token = req.headers['authorization'];
+    const bearerToken = token.split(' ')[1];
+    const decoded = jwt.verify(bearerToken, process.env.TOKEN_C);
+    console.log("token",bearerToken)
+    if (!bearerToken) {
+        return res.status(401).json({ error: 'Usuário não autenticado.' });
+    }
 
-    // if (nm.length < 2 || nm.length > 125) {
-    //     return res.status(400).json({ message: 'O nome deve conter entre 2 e 125 caracteres.' });
-    // }
+    // Verificar se o usuário informado existe
+    const user = await User.findOne({ id: user_id });
 
-    // if (em.length < 10 || em.length > 125) {
-    //     return res.status(400).json({ message: 'O email deve conter entre 10 e 125 caracteres.' });
-    // }
+    if (!user) {
+        return res.status(401).json({ error: 'Usuário informado não existe.' });
+    }
 
-    // if (!em.includes('@')) {
-    //     return res.status(400).json({ message: 'Email inválido' });
-    // }
+    // Verificar se o user_id informado corresponde ao ID do usuário solicitante
+    if (!decoded || decoded.id !== user.id) {
+        return res.status(401).json({ error: 'Não é possível realizar a solicitação' });
+    }
 
-    // let hash = sn; //senha já veio em hash
+    // Validar todos os campos
+    if (reg === '' || loc === '' ||  occ === '' || km === '') {
+        return res.status(400).json({ message: 'Por favor, preencha todos os campos!' });
+    }
 
-    // // Verificar se a senha não está em hash 
-    // if (typeof sn === 'string' && sn.length !== 32) {
-    //     if (sn.length < 2) {
-    //         return res.status(400).json({ message: 'A senha deve conter pelo menos 2 caracteres.' });
-    //     } else if (sn.length > 125) {
-    //         return res.status(400).json({ message: 'A senha deve conter no máximo 125 caracteres.' });
-    //     } else {
-    //         // Transformar a senha em hash
-    //         hash = crypto.createHash('md5').update(sn).digest('hex');
-    //     }
-    // }
+    const isValidRegisteredAt = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(reg);
+    if (!isValidRegisteredAt) {
+        return res.status(400).json({ error: 'Campos inválidos' });
+    }
 
-    // let id = await Users.countDocuments();
+    const isValidLocal = loc && loc.length >= 10 && loc.length <= 125;
+    if (!isValidLocal) {
+        return res.status(400).json({ error: 'Campos inválidos' });
+    }
+   
+    const isValidOccurrenceType = occ >= 1 && occ <= 10;
+    if (!isValidOccurrenceType) {
+        return res.status(400).json({ error: 'Campos inválidos' });
+    }
 
-    // let data = {
-    //     id: id === 0? 1: id+1,
-    //     name: nm,
-    //     email: em,
-    //     password: hash
-    // };
+    const isValidKm = km >= 1 && km <= 9999;
+    if (!isValidKm) {
+        return res.status(400).json({ error: 'Campos inválidos' });
+    }
 
-    // try {
-    //     const existingUser = await Users.findOne({ email: em }).exec();
-    //     if (existingUser) {
-    //         console.log(existingUser)
-    //         // Já existe um usuário com esse email
-    //         return res.status(422).json({ message: 'Já existe um cadastro com esse email.' });
-    //     }
-    //     // Criar um novo usuário
-    //     const createdUser = await Users.create(data);
-    //     res.status(200).json({ message: 'Cadastro bem-sucedido', usuario: createdUser});
-    //     // res.redirect("/listAll");
-    // } catch (err) {
-    //     return next(err);
-    // }
+    const isValidUserId = user_id >= 1;
+    if (!isValidUserId) {
+        return res.status(400).json({ error: 'Campos inválidos' });
+    }
+
+    let id = await Occurrences.countDocuments();
+
+    let data = {
+        id: id === 0? 1: id+1,
+        registered_at: reg,
+        local: loc,
+        occurrence_type: occ,
+        km: km,
+        user_id: user_id,
+        token: bearerToken
+    };
+
+    console.log("data:", data);
+
+    try {
+        // Criar uma nova occorencia
+        const createdOccurrence = await Occurrences.create(data);
+        res.status(200).json({ message: 'Cadastro bem-sucedido', id: data.id, registered_at: data.registered_at, local: data.local, occurrence_type: data.occurrence_type, km: data.km, user_id: data.user_id, token: data.token});
+    } catch (err) {
+        return next(err);
+    }
+  
+};
+
+
+exports.listAll = async function (req, res, next) {
+    try {
+        let existOccorrences = await Occurrences.countDocuments();
+        // Buscar todas as ocorrências
+        //Verifica se existe ocorrencias cadastradas
+        if(existOccorrences > 0){
+            const occurrences = await Occurrences.find();
+            res.status(200).json({ occurrences });
+        }
+        else{
+            res.status(200).json({ occurrences:[] });
+        }
+    
+      } catch (err) {
+        return next(err);
+      }
 };
