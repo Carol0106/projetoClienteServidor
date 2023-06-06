@@ -5,7 +5,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    height: 95vh;
+    height: 98vh;
     background-position: center;
     display: flex;
     flex-direction: row;
@@ -62,7 +62,7 @@
 }
 
 .nav-item{
-    padding: 0 80px;
+    padding: 0 50px;
 }
 
 .a{
@@ -83,7 +83,7 @@
     top: 119px;
     background-color: lightcoral;
     height: 80px;
-    width: 80%;
+    width: 45%;
     display: flex;
     justify-content: center;
     align-items: center;

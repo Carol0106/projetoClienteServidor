@@ -6,10 +6,9 @@ const logoutController = require('../controllers/logoutControllers');
 const occurrenceController = require('../controllers/occurrenceControllers');
 
 router.post('/users', userController.create);
-router.post('/update/:id', userController.update);
-router.get('/delete/:id', userController.delete);
-router.get('/edit/:id', userController.edit);
-router.get('/listAll',userController.listAllUsers);
+router.get('/users/:id', userController.getData);
+router.put('/users/:id', userController.update);
+router.delete('/delete/:id', userController.delete);
 
 router.post('/login', loginController.login);
 

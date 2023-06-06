@@ -11,47 +11,55 @@
 
 .containerP{
     height: 60%;
-    margin: auto;
-    width: 65%;
+    margin: 200px auto;
+    width: 45%;
+    text-align: center;
     /* background-color: rgba(95,95,95,0.5); */
     /* background-color: #D9D9D9; */
 }
 
+.containerA{
+    height: 60%;
+    margin: auto;
+    width: 65%;
+}
 
 .title{
     text-transform: uppercase;
     font-size: 30px;
-    margin: 0 0 50px 0;
+    margin: 0 0 20px 0;
     color: #2E2A2A;
 }
 
 .btnAtualizar{
+    margin: auto;
     text-decoration: none;
     color: #fff;
     background-color: #CA814E;
     height: 40px;
     width: 130px;
     display: flex;
-    border-radius: 25px;
+    border-radius: 8px;
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
-    position: absolute;
-    right: 18%;
-    top: 195px;
 }
 
 .divRow{
     display: inline-flex;
-    width: 100%;
+    width: 80%;
+    height: 18px;
+    border: solid 1px #fff;
+    margin: 16px;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+    padding: 15px;
     align-items: center;
-    height: 30px;
 }
 
 .divRow label{
-    width: 60px;
+    width: 65px;
 }
-
 
 
 .input{
@@ -78,8 +86,8 @@
 
 .btn{
     border: none;
-    height: 45px;
-    width: 15.5%;
+    height: 40px;
+    width: 14.5%;
     border-radius: 30px;
     font-size: 16px;
     margin: 8px;
@@ -104,3 +112,68 @@
     color: #ffff;
 }
 
+
+.mensagemS{
+    position: absolute;
+    top: 107px;
+    background-color: darkseagreen;
+    height: 80px;
+    width: 99%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    font-size: 20px;
+    color: green;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.mensagemE{
+    position: absolute;
+    top: 107px;
+    background-color: lightcoral;
+    height: 80px;
+    width: 99%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    font-size: 20px;
+    color: darkred;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.imgPerfil{
+    background-image: url('./../img/perfil.png'); 
+    height: 180px;
+    background-position: center;
+    background-size: 180px;
+    width: 180px;
+    background-repeat: no-repeat;
+    padding: 0;
+    margin: auto;
+}
+
+/*    footer    */
+.footer {
+    position: relative;
+  }
+  
+  .wave {
+    position: absolute;
+    bottom: -8px;
+    left: -10px;
+    right: -8px;
+    height: 337px;
+    background-image: url('./../img/footer1.png'); 
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  
+  .content {
+    position: relative;
+    z-index: 2;
+  }

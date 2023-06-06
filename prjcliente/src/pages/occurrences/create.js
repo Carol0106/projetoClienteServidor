@@ -21,21 +21,21 @@ export default function Create() {
                 return 1;
               case 'Deslizamento':
                 return 2;
-              case 'Colisão frontal':
+              case 'ColisaoFrontal':
                 return 3;
               case 'Capotagem':
                 return 4;
-              case 'Saída de pista':
+              case 'SaidaDePista':
                 return 5;
-              case 'Batida em objeto fixo':
+              case 'BatidaEmObjetoFixo':
                 return 6;
-              case 'Veículo avariado':
+              case 'VeiculoAvariado':
                 return 7;
-              case 'Colisão com motocicletas':
+              case 'ColisaoComMotocicletas':
                 return 8;
-              case 'Colisão no mesmo sentido ou transversal':
+              case 'ColisaoNoMesmoSentidoOuTransversal':
                 return 9;
-              case 'Construção':
+              case 'Construcao':
                 return 10;
               default:
                 return null; // Valor não encontrado
@@ -101,19 +101,6 @@ export default function Create() {
                     clearFields();
                     setSuccessMessage('Ocorrência criado com sucesso!');
 
-                    // Converter o objeto em formato JSON
-                    const dataOccurrence = {
-                        id: response.data.id,
-                        registered_at: response.data.registered_at,
-                        local: response.data.local,
-                        occurrence_type: response.data.occurrence_type,
-                        km: response.data.km,
-                        user_id: response.data.user_id,
-                        token: response.data.token
-                    };
-                    const occurrenceDataJson = JSON.stringify(dataOccurrence);
-                    // Salvar a string JSON no localStorage
-                    localStorage.setItem('occurrenceData', occurrenceDataJson);
                 } else {
                     setErrorMessage(response.data.message); 
                 }
@@ -194,3 +181,17 @@ export default function Create() {
 
     )
 }
+
+//  // Converter o objeto em formato JSON
+//  const dataOccurrence = {
+//   id: response.data.id,
+//   registered_at: response.data.registered_at,
+//   local: response.data.local,
+//   occurrence_type: response.data.occurrence_type,
+//   km: response.data.km,
+//   user_id: response.data.user_id,
+//   token: response.data.token
+// };
+// const occurrenceDataJson = JSON.stringify(dataOccurrence);
+// // Salvar a string JSON no localStorage
+// localStorage.setItem('occurrenceData', occurrenceDataJson);

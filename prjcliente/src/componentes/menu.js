@@ -2,6 +2,8 @@ import Style from './../assets/styles/home.module.css';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
 import api from "./../services/api";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRoad, faUser, faList, faRightFromBracket, faCarBurst, faAddressBook } from '@fortawesome/free-solid-svg-icons'
 
 export default function Menu() {
     const router = useRouter();
@@ -59,31 +61,37 @@ export default function Menu() {
                 <ul className={Style['navbar-nav']}>
                     <li className={Style['nav-item']}>
                         <a className={Style.a} href="/home"> 
+                        <FontAwesomeIcon icon={faRoad} style={{color: "#ffffff", marginRight: '5px'}} /> 
                         home
                         </a>
                     </li>
                     <li className={Style['nav-item']}>
                         <a className={Style.a} href="/occurrences/getAll"> 
+                        <FontAwesomeIcon icon={faList} style={{color: "#ffffff", marginRight: '5px'}} />
                         Listagem de incidentes
                         </a>
                     </li>
                     <li className={Style['nav-item']}>
                         <a className={Style.a} href="">
+                        <FontAwesomeIcon icon={faAddressBook} style={{color: "#ffffff", marginRight: '5px'}} />
                         Minha lista de incidentes
                         </a>
                     </li>
                     <li className={Style['nav-item']}>
                         <a className={Style.a} href="/occurrences/create">
+                        <FontAwesomeIcon icon={faCarBurst} style={{color: "#ffffff", marginRight: '5px'}} />
                         Reportar incidentes
                         </a>
                     </li>
                     <li className={Style['nav-item']}>
                         <a className={Style.a} href="/users/perfil">
+                        <FontAwesomeIcon icon={faUser} style={{color: "#ffffff", marginRight: '5px'}} />
                         Perfil
                         </a>
                     </li>
                     <li className={Style['nav-item']} >
                         <a className={Style.a}  onClick={logout}>
+                        <FontAwesomeIcon icon={faRightFromBracket} style={{color: "#ffffff", marginRight: '5px'}} />
                         Sair
                         </a>
                     </li>
