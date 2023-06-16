@@ -1,6 +1,7 @@
 import Style from './../../assets/styles/occurrences.module.css';
 import React, { useState, useEffect } from "react";
 import Menu from '../../componentes/menu';
+import MenuSemValidacao from '../../componentes/menuSemVerificacao';
 import api from '../../services/api';
 import { useRouter } from "next/router";
 import { format } from 'date-fns';
@@ -8,6 +9,7 @@ import { format } from 'date-fns';
 
 export default function GetAll() {
     const [occurrences, setOccurrences] = useState([]);
+    const [menu, setMenu] = useState(null);
 
     const obterNomeIncidente = (occurrence_type) => {
         switch (occurrence_type) {
@@ -37,6 +39,21 @@ export default function GetAll() {
       };
 
     useEffect(() => {
+
+      if(typeof window !== 'undefined') {
+        // Recupera token armazenado no localStorage
+        const token = localStorage.getItem('token');
+    
+        // Verificar se há um token no armazenamento local
+        if (!token) {
+            setMenu(<MenuSemValidacao />);
+        }
+        else{
+            setMenu(<Menu />);
+        }
+
+    }
+
       fetchOccurrences();
     }, []);
   
@@ -44,7 +61,7 @@ export default function GetAll() {
     async function fetchOccurrences() {
       try {
         const response = await api.get('/occurrences');
-        const { occurrences } = response.data;
+        const occurrences = response.data;
         setOccurrences(occurrences);
       } catch (error) {
         console.error(error);
@@ -54,7 +71,7 @@ export default function GetAll() {
     return (
       <div className={`${Style.background}`}>
         <div className={`container ${Style.containerG}`}>
-          <Menu />
+           {menu}
           <div>
             <h2 className={`${Style.title}`}>listagem de incidentes</h2>
             <button className={`${Style.btnAtualizar}`} onClick={fetchOccurrences}><b>Atualizar</b></button>
@@ -74,7 +91,8 @@ export default function GetAll() {
               {occurrences.map((occurrence) => (
                 <tr key={occurrence.id}>
                   <td>{occurrence.id}</td>
-                  <td>{format(new Date(occurrence.registered_at.replace(/-/g, '/')), 'dd/MM/yyyy HH:mm:ss')}</td>
+                  <td>{occurrence.registered_at}</td>
+                  {/* <td>{format(new Date(occurrence.registered_at.replace(/-/g, '/')), 'dd/MM/yyyy HH:mm:ss')}</td> */}
                   <td>{occurrence.local}</td>
                   <td>{obterNomeIncidente(occurrence.occurrence_type)}</td>
                   <td>{occurrence.km}</td>

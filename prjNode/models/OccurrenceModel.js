@@ -60,7 +60,7 @@ const Occurrence =  new Schema({
         type: String,
         required: [true,'*Campo obrigatório!'],
         maxlength:125,
-        minlength:10
+        minlength:1
     },
     occurrence_type:{ 
         type:Number,

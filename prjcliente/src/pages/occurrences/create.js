@@ -55,15 +55,15 @@ export default function Create() {
         }
 
         const occurrence_type = obterIdIncidente(tipo);
-        const registered_at = `${data} ${hora}`;
+        const registered_at = `${data}T${hora}.000Z`;
         
         if (data === '' || hora === '' || tipo === '' ||  km === '' || local === '') {
             setErrorMessage('Por favor, preencha todos os campos!');
             return;
         }
         
-        if (local.length < 10 || local.length > 125) {
-            setErrorMessage('O local deve conter entre 10 e 125 caracteres.');
+        if (local.length < 1 || local.length > 125) {
+            setErrorMessage('O local deve conter entre 1 e 125 caracteres.');
           return;
         }
       

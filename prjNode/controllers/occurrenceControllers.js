@@ -39,12 +39,12 @@ exports.create = async function (req, res, next) {
         return res.status(400).json({ message: 'Por favor, preencha todos os campos!' });
     }
 
-    const isValidRegisteredAt = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(reg);
-    if (!isValidRegisteredAt) {
-        return res.status(400).json({ error: 'Campos inválidos' });
-    }
+    // const isValidRegisteredAt = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(reg);
+    // if (!isValidRegisteredAt) {
+    //     return res.status(400).json({ error: 'Campos inválidos' });
+    // }
 
-    const isValidLocal = loc && loc.length >= 10 && loc.length <= 125;
+    const isValidLocal = loc && loc.length >= 1 && loc.length <= 125;
     if (!isValidLocal) {
         return res.status(400).json({ error: 'Campos inválidos' });
     }
@@ -94,13 +94,8 @@ exports.listAll = async function (req, res, next) {
         let existOccorrences = await Occurrences.countDocuments();
         // Buscar todas as ocorrências
         //Verifica se existe ocorrencias cadastradas
-        if(existOccorrences > 0){
-            const occurrences = await Occurrences.find();
-            res.status(200).json({ occurrences });
-        }
-        else{
-            res.status(200).json({ occurrences:[] });
-        }
+        const occurrences = await Occurrences.find();
+        res.status(200).json(occurrences);
     
       } catch (err) {
         return next(err);
