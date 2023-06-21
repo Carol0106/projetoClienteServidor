@@ -64,10 +64,18 @@ exports.create = async function (req, res, next) {
         return res.status(400).json({ error: 'Campos inválidos' });
     }
 
-    let id = await Occurrences.countDocuments();
+    const count = await Occurrences.countDocuments();
+    let id;
+
+    if (count > 0) {
+    const latestOccurrence = await Occurrences.findOne({}, {}, { sort: { id: -1 } });
+    id = latestOccurrence.id + 1;
+    } else {
+    id = 1;
+    }
 
     let data = {
-        id: id === 0? 1: id+1,
+        id: id,
         registered_at: reg,
         local: loc,
         occurrence_type: occ,
@@ -101,3 +109,91 @@ exports.listAll = async function (req, res, next) {
         return next(err);
       }
 };
+
+exports.getOccurrence = async function (req, res, next) {
+    const userId = parseInt(req.params.id); 
+    console.log("chegou no back", userId)
+
+    // Verificar se o usuário solicitante está autenticado
+    const token = req.headers['authorization'];
+    const bearerToken = token.split(' ')[1];
+    const decoded = jwt.verify(bearerToken, process.env.TOKEN_C);
+    console.log("token",bearerToken)
+    if (!bearerToken) {
+        return res.status(401).json({ error: 'Usuário não autenticado.' });
+    }
+
+    // Verificar se o usuário informado existe
+    const user = await User.findOne({ id: userId });
+
+    if (!user) {
+        return res.status(401).json({ error: 'Usuário informado não existe.' });
+    }
+
+    // Verificar se o user_id informado corresponde ao ID do usuário solicitante
+    if (!decoded || decoded.id !== user.id) {
+        return res.status(401).json({ error: 'Não é possível realizar a solicitação' });
+    }
+
+    //Verifica se existe ocorrencias cadastradas
+    let existOccorrences = await Occurrences.countDocuments();
+   
+    try {
+        // Buscar todas as ocorrências do usuário autenticado
+        const occurrences = await Occurrences.find({ user_id : userId });
+    
+        res.status(200).json(occurrences);
+    } catch (err) {
+        return next(err);
+    }
+};
+
+exports.update = async function (req, res, next) {
+console.log("chegou")
+}
+
+
+exports.delete = async function (req, res, next) {
+    const occurrenceId = parseInt(req.params.id);
+    
+    // Verificar se o usuário solicitante está autenticado
+    const token = req.headers['authorization'];
+    const bearerToken = token.split(' ')[1];
+    const decoded = jwt.verify(bearerToken, process.env.TOKEN_C);
+    console.log("token",bearerToken)
+    if (!bearerToken) {
+        return res.status(401).json({ error: 'Usuário não autenticado.' });
+    }
+    console.log("chegou para deletar", token)
+
+    // Verificar se o usuário informado existe
+    const user = await User.findOne({ id: decoded.id });
+    if (!user) {
+        return res.status(401).json({ error: 'Usuário informado não existe.' });
+    }
+    
+    // Verificar se a ocorrencia informada existe
+    const occurrence = await Occurrences.findOne({ id: occurrenceId });
+    if (!occurrence) {
+        return res.status(401).json({ error: 'Ocorrencia não existe.' });
+    }
+
+    // Verificar se o user_id informado corresponde ao ID do usuário solicitante
+    if (!decoded || decoded.id !== user.id) {
+        return res.status(401).json({ error: 'Não é possível realizar a solicitação' });
+    }
+
+    // Verificar se o user_id informado corresponde ao ID do usuário solicitante
+    if (occurrence.user_id !== decoded.id) {
+        return res.status(401).json({ error: 'Não é possível realizar a solicitação.' });
+    }
+
+     try {
+        // Remover a ocorrência do banco de dados
+        await Occurrences.findOneAndDelete({ id: occurrenceId });
+
+        return res.status(200).json({ message: 'Ocorrência removida com sucesso.' });
+    } catch (err) {
+        return next(err);
+    }
+}

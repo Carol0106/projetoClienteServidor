@@ -72,7 +72,7 @@ export default function Menu() {
                         </a>
                     </li>
                     <li className={Style['nav-item']}>
-                        <a className={Style.a} href="">
+                        <a className={Style.a} href="/occurrences/get">
                         <FontAwesomeIcon icon={faAddressBook} style={{color: "#ffffff", marginRight: '5px'}} />
                         Minha lista de incidentes
                         </a>

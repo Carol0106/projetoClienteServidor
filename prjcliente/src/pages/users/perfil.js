@@ -57,6 +57,27 @@ export default function Perfil() {
         }
     }, [dataUser, storedToken]);
 
+    
+    async function fetchUserDelete(){
+        if (dataUser) {
+            try {
+                console.log("entrou")
+                const response = await api.delete(`/users/${dataUser.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${storedToken}`,
+                    },
+                });
+
+                if (response.status === 200) {
+                    localStorage.removeItem('token');
+                    router.push('/login');
+                }
+            } catch (error) {
+                // Trate os erros, se necessário
+                console.error(error);
+            }
+        }
+    }
 
     return (
         <div>
@@ -67,7 +88,10 @@ export default function Perfil() {
                 <div className={`${Style.imgPerfil}`}></div>
                 <div>
                 <h2 className={`${Style.title}`}>Perfil</h2>
-                <a className={`${Style.btnAtualizar}`} href="/users/update"><b>Atualizar</b></a>
+                <div style={{display:"inline-flex"}}>
+                    <a className={`${Style.btnAtualizar}`} href="/users/update"><b>Atualizar</b></a>
+                    <a className={`${Style.btnDeletar}`} onClick={() => fetchUserDelete()}><b>Deletar</b></a>
+                </div>
                 </div>
                 <br />
                 <div className={`${Style.divRow}`}>

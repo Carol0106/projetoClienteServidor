@@ -184,6 +184,32 @@ background-color: #f0f0f0;
     cursor: pointer;
 }
 
+.btnAtualizar2{
+    text-decoration: none;
+    color: #fff;
+    background-color: #CA814E;
+    height: 40px;
+    display: flex;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+}
+.btnDeletar{
+    text-decoration: none;
+    color: #fff;
+    background-color: #CA4E4E;
+    height: 40px;
+    display: flex;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+}
 
 .mensagemS{
     position: absolute;

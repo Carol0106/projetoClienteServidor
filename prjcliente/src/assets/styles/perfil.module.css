@@ -44,6 +44,21 @@
     justify-content: center;
     text-transform: uppercase;
 }
+.btnDeletar{
+    margin: auto;
+    text-decoration: none;
+    color: #fff;
+    background-color: #CA4E4E;
+    height: 40px;
+    width: 130px;
+    display: flex;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    margin-left: 5px;
+    cursor: pointer;
+}
 
 .divRow{
     display: inline-flex;

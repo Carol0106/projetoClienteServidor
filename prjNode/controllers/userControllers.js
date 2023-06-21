@@ -1,4 +1,5 @@
 const Users = require('../models/UserModel');
+const Occurrences = require('../models/OccurrenceModel');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
@@ -227,11 +228,41 @@ exports.update = async function (req, res, next) {
 };
         
 
-//APAGA E DEVOLVE O USUARIO DELETADO
-exports.delete = function (req, res, next) {
-    Users.findByIdAndDelete({_id:req.params.id}).then(function(users){
-        console.log("Usuário deletado com sucesso!!");
-        res.redirect('/listAll');
-    }).catch(next);
+//APAGA 
+exports.delete = async function (req, res, next) {
+    const userId = parseInt(req.params.id);
+    console.log("chegouoooooooooos", userId)
+
+     // Verifica se o usuário está autenticado
+     const token = req.headers['authorization'];
+     console.log(token)
+     const bearerToken = token.split(' ')[1];
+     const decoded = jwt.verify(bearerToken, process.env.TOKEN_C);
+     if (!bearerToken) {
+         return res.status(401).json({ error: 'Usuário não autenticado' });
+     }
+
+     // Verifica se o usuário informado existe
+     const user = await Users.findOne({ id: userId });
+
+     if (!user) {
+         return res.status(401).json({ error: 'Usuário informado não existe' });
+     }
+
+     // Verifica se o ID informado na URL corresponde ao ID do usuário solicitante
+
+     if (!decoded || decoded.id !== userId) {
+         return res.status(401).json({ error: 'Não é possível realizar a solicitação' });
+     }
+    
+     try {
+        // Remove o usuário do banco e todas sua ocorrencias e coloca o token na blacklist
+        await Occurrences.deleteMany({ user_id: userId });
+        await Users.findOneAndDelete({ id: userId });
+        blacklist.push(token);
+        return res.status(200).json({ message: 'Usuário excluído com sucesso' });
+    } catch (err) {
+        return next(err);
+    }
 };
 
