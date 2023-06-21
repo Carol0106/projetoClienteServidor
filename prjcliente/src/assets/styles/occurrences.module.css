@@ -31,6 +31,8 @@
     margin: 8px;
     border: none;
     padding: 21px;
+    
+    font-family: 'Inter';
 }
 .inputS{
     height: 52px;
@@ -48,9 +50,11 @@
      background-image: url('./../img/seta.png');
      background-repeat: no-repeat;
      background-position: 97%;
+     font-family: 'Inter';
 }
 .label{
-    margin-left: 15px;
+    margin-left: 15px;  
+    font-family: 'Inter';
 }
 .divRow{
     display: inline-flex;
@@ -97,11 +101,13 @@
     color: #CA814E;
     outline: 2px solid #CA814E;
     text-decoration: none;
+    font-family: 'Inter';
 }
 
 .btsalvar{
     background-color: #CA814E;
     color: #ffff;
+    font-family: 'Inter';
 }
 
 
@@ -111,6 +117,7 @@
     margin: 0 0 50px 0;
     color: #2E2A2A;
 }
+
 
 .btnEntrar{
     color: #2E2A2A;
@@ -241,4 +248,58 @@ background-color: #f0f0f0;
     color: darkred;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.modal {
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center; */
+    position: absolute;
+    inset: 40px;
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255, 255, 255);
+    overflow: auto;
+    border-radius: 10px;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    /* height: 100%; */
+    width: 100%;
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
+    color: gray;
+  }
+  
+  .closeButton:hover {
+    color: black;
+  }
+
+  .titleM{
+    text-transform: uppercase;
+    font-size: 30px;
+    margin: 0 0 50px 0;
+    color: #2E2A2A;
+    font-family: 'Inter';
 }

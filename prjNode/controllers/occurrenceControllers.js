@@ -149,7 +149,88 @@ exports.getOccurrence = async function (req, res, next) {
 };
 
 exports.update = async function (req, res, next) {
-console.log("chegou")
+    const idOccurrence =  req.params.id;
+    const registered_at =   req.body.registered_at;
+    const occurrence_type =   req.body.occurrence_type;
+    const km =   req.body.km;
+    const local =   req.body.local;
+    const idUser =   req.body.user_id;
+
+    console.log("chegou", req.body)
+
+     // Verificar se o usuário solicitante está autenticado
+     const token = req.headers['authorization'];
+     const bearerToken = token.split(' ')[1];
+     const decoded = jwt.verify(bearerToken, process.env.TOKEN_C);
+
+     if (!bearerToken) {
+         return res.status(401).json({ error: 'Usuário não autenticado.' });
+     }
+ 
+     // Verificar se o usuário informado existe
+     const user = await User.findOne({ id: decoded.id });
+     if (!user) {
+         return res.status(401).json({ error: 'Usuário informado não existe.' });
+     }
+
+      // Verificar se o user_id informado corresponde ao ID do usuário solicitante
+    if (!decoded || decoded.id !== user.id) {
+        return res.status(401).json({ error: 'Não é possível realizar a solicitação' });
+    }
+
+     // Verificar se a ocorrencia informada existe
+    const occurrence = await Occurrences.findOne({ id: idOccurrence });
+    if (!occurrence) {
+         return res.status(401).json({ error: 'Ocorrencia não existe.' });
+    }
+
+    // Validar todos os campos
+    if (registered_at === '' || occurrence_type === '' ||  local === '' || km === '') {
+        return res.status(400).json({ message: 'Por favor, preencha todos os campos!' });
+    }
+
+    // const isValidRegisteredAt = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(reg);
+    // if (!isValidRegisteredAt) {
+    //     return res.status(400).json({ error: 'Campos inválidos' });
+    // }
+
+    const isValidLocal = local && local.length >= 1 && local.length <= 125;
+    if (!isValidLocal) {
+        return res.status(400).json({ error: 'Campos inválidos' });
+    }
+   
+    const isValidOccurrenceType = occurrence_type >= 1 && occurrence_type <= 10;
+    if (!isValidOccurrenceType) {
+        return res.status(400).json({ error: 'Campos inválidos' });
+    }
+
+    const isValidKm = km >= 1 && km <= 9999;
+    if (!isValidKm) {
+        return res.status(400).json({ error: 'Campos inválidos' });
+    }
+
+    const isValidUserId = idUser >= 1;
+    if (!isValidUserId) {
+        return res.status(400).json({ error: 'Campos inválidos' });
+    }
+
+     // Atualize os campos da ocorrência com os novos valores
+    occurrence.registered_at = registered_at;
+    occurrence.occurrence_type = occurrence_type;
+    occurrence.km = km;
+    occurrence.local = local;
+    occurrence.user_id = idUser;
+
+    try {
+        // Salve a ocorrência atualizada no banco de dados
+        await occurrence.save();
+        console.log("ocorrencia atualizada!")
+        return res.status(200).json({ message: 'Ocorrência atualizada com sucesso.' });
+    } catch (error) {
+        return res.status(500).json({ error: 'Erro ao atualizar a ocorrência.' });
+    }
+
+
 }
 
 
