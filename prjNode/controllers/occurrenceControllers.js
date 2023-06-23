@@ -225,7 +225,7 @@ exports.update = async function (req, res, next) {
         // Salve a ocorrência atualizada no banco de dados
         await occurrence.save();
         console.log("ocorrencia atualizada!")
-        return res.status(200).json({ message: 'Ocorrência atualizada com sucesso.' });
+        return res.status(200).json(occurrence);
     } catch (error) {
         return res.status(500).json({ error: 'Erro ao atualizar a ocorrência.' });
     }

@@ -7,7 +7,7 @@ export default function Create() {
     const [data, setData] = useState('');
     const [hora, setHora] = useState('');
     const [tipo, setTipo] = useState('');
-    const [km, setKm] = useState('');
+    const [km, setKm] = useState(0);
     const [local, setLocal] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -84,7 +84,7 @@ export default function Create() {
             registered_at,
             local,
             occurrence_type,
-            km,
+            km:parseInt(km),
             user_id: userData.id
         };
         console.log('dadosss', dados);

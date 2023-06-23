@@ -22,7 +22,7 @@ export default function Get() {
     const [data, setData] = useState('');
     const [hora, setHora] = useState('');
     const [tipo_incidente, setTipoIncidente] = useState('');
-    const [km, setKm ] = useState('');
+    const [km, setKm ] = useState(0);
     const [local, setLocal] = useState('');
     const [id, setId] = useState('');
 
@@ -117,7 +117,7 @@ export default function Get() {
       setData(data);
       setHora(hora);
       setTipoIncidente(obterNomeIncidente(occurrence.occurrence_type));
-      setKm(occurrence.km);
+      setKm(parseInt(occurrence.km));
       setLocal(occurrence.local);
       setModalIsOpen(true);
     }
@@ -168,7 +168,7 @@ export default function Get() {
           const updatedOccurrence = {
             registered_at: `${data}T${hora}.000Z`,
             occurrence_type: obterIdIncidente(tipoIncidente),
-            km: km,
+            km: parseInt(km),
             local: local,
             user_id: userData.id
           };

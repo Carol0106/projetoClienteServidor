@@ -83,10 +83,18 @@ exports.create = async function (req, res, next) {
         }
     }
 
-    let id = await Users.countDocuments();
+    const count = await Occurrences.countDocuments();
+    let id;
+
+    if (count > 0) {
+        const latestOccurrence = await Occurrences.findOne({}, {}, { sort: { id: -1 } });
+        id = latestOccurrence.id + 1;
+    } else {
+        id = 1;
+    }
 
     let data = {
-        id: id === 0? 1: id+1,
+        id: id,
         name: nm,
         email: em,
         password: hash
