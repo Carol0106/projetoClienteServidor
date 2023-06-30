@@ -83,15 +83,8 @@ exports.create = async function (req, res, next) {
         }
     }
 
-    const count = await Occurrences.countDocuments();
-    let id;
-
-    if (count > 0) {
-        const latestOccurrence = await Occurrences.findOne({}, {}, { sort: { id: -1 } });
-        id = latestOccurrence.id + 1;
-    } else {
-        id = 1;
-    }
+    const last = await Users.findOne().sort({_id: -1}).exec()
+    const id = last?.id ? last.id + 1 : 1;
 
     let data = {
         id: id,
